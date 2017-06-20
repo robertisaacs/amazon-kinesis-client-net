@@ -242,7 +242,6 @@ namespace Amazon.Kinesis.ClientLibrary.Bootstrap
                 
             return null;
         }
-
         public static void Main(string[] args)
         {
             var result = Parser.Default.ParseArguments<Options>(args);
