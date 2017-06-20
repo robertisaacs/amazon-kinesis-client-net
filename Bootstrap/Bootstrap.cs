@@ -116,16 +116,17 @@ namespace Amazon.Kinesis.ClientLibrary.Bootstrap
         [Option('e', "execute", HelpText = "Actually launch the KCL. If not specified, prints the command used to launch the KCL.")]
         public bool ShouldExecute { get; set; }
 
-        [HelpOption]
+        //[HelpOption]
         public string GetUsage()
         {
-            var help = new HelpText
+            /*var help = new HelpText
             {
                 AdditionalNewLineAfterOption = true,
                 AddDashesToOption = true
             };
             help.AddOptions(this);
-            return help;
+            return help;*/
+            return "You're on your own";
         }
     }
 
@@ -223,7 +224,7 @@ namespace Amazon.Kinesis.ClientLibrary.Bootstrap
             }
 
             // Failing that, look in the registry.
-            foreach (var view in new [] { RegistryView.Registry64, RegistryView.Registry32 })
+            /*foreach (var view in new [] { RegistryView.Registry64, RegistryView.Registry32 })
             { 
                 var localKey = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, view);
                 var javaRootKey = localKey.OpenSubKey(@"SOFTWARE\JavaSoft\Java Runtime Environment");
@@ -237,16 +238,17 @@ namespace Amazon.Kinesis.ClientLibrary.Bootstrap
                         return javaExe;
                     }
                 }
-            }
+            }*/
                 
             return null;
         }
 
         public static void Main(string[] args)
         {
-            var options = new Options();
-            if (Parser.Default.ParseArguments(args, options))
+            var result = Parser.Default.ParseArguments<Options>(args);
+            if (result != null)
             {
+                var options = ((CommandLine.Parsed<Options>)result).Value;
                 string javaClassPath = FetchJars(options.JarFolder);
                 string java = FindJava(options.JavaLocation);
 
